@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>InfinityCrypt 2025</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+
+    <div class="container">
+        <header class="futuristic-header">
+            <div class="logo">
+                <span class="neon-blue">Infinity</span><span class="neon-pink">Crypt</span>
+                <span class="year">2025</span>
+            </div>
+            <div class="tagline">Quantum-grade encryption for the safe future</div>
+        </header>
+
+        <div class="auth-container">
+            <div class="auth-toggle">
+                <button id="btn-login" class="active">Login</button>
+                <button id="btn-register">Register</button>
+                <div class="toggle-indicator"></div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form active">
+                <div class="input-group">
+                    <input type="text" id="login-username" required />
+                    <label for="login-username" class="input-label">Username</label>
+                    <div class="input-underline"></div>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="login-password" required />
+                    <label for="login-password" class="input-label">Password</label>
+                    <div class="input-underline"></div>
+                </div>
+                <button type="submit" class="neon-button">
+                    <span></span><span></span><span></span><span></span>
+                    Access System
+                </button>
+                <div class="holographic-line"></div>
+                <div class="form-footer">
+                    <a href="#" id="forgot-link" class="neon-link">Forgot Password?</a>
+                </div>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" class="auth-form">
+                <div class="input-group">
+                    <input type="text" id="register-username" required />
+                    <label for="register-username" class="input-label">Username</label>
+                    <div class="input-underline"></div>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="register-password" required />
+                    <label for="register-password" class="input-label">Password</label>
+                    <div class="input-underline"></div>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="register-confirm" required />
+                    <label for="register-confirm" class="input-label">Confirm Password</label>
+                    <div class="input-underline"></div>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="register-security-question" required />
+                    <label for="register-security-question" class="input-label">What is the name of your dearest person?</label>
+                    <div class="input-underline"></div>
+                </div>
+                <button type="submit" class="neon-button">
+                    <span></span><span></span><span></span><span></span>
+                    Create Identity
+                </button>
+                <div class="holographic-line"></div>
+                <div class="form-footer">
+                    <p class="neon-text">By registering, you agree to our quantum encryption protocols</p>
+                </div>
+            </form>
+
+            <!-- Reset Password Page -->
+            <div id="reset-password-page" class="auth-form hidden">
+                <h3 class="neon-text">Reset Your Password</h3>
+                <div class="input-group">
+                    <input type="text" id="reset-username" required />
+                    <label for="reset-username" class="input-label">Username</label>
+                    <div class="input-underline"></div>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="reset-security-answer" required />
+                    <label for="reset-security-answer" class="input-label">What is the name of your dearest person?</label>
+                    <div class="input-underline"></div>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="reset-new-password" required />
+                    <label for="reset-new-password" class="input-label">New Password</label>
+                    <div class="input-underline"></div>
+                </div>
+                <button id="reset-submit" class="neon-button">
+                    <span></span><span></span><span></span><span></span>
+                    Reset Password
+                </button>
+            </div>
+        </div>
+
+        <!-- Terminal -->
+        <div class="crypto-terminal">
+            <div class="terminal-header">
+                <div class="terminal-title">InfinityCrypt Terminal</div>
+                <div class="terminal-controls">
+                    <span class="control-dot red"></span>
+                    <span class="control-dot yellow"></span>
+                    <span class="control-dot green"></span>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminal-output">
+                <p>> Welcome to InfinityCrypt 2025</p>
+                <p>> System status: <span class="neon-green">Online</span></p>
+                <p>> Quantum encryption: <span class="neon-blue">Active</span></p>
+                <p>> Ready for authentication...</p>
+            </div>
+        </div>
+
+        <!-- Crypto Tools Page -->
+        <div id="crypto-tools-page" class="hidden">
+            <div class="crypto-header">
+                <h2>InfinityCrypt <span class="neon-pink">Data Vault</span></h2>
+                <p class="neon-text">Your data will be safe.</p>
+            </div>
+
+            <div class="crypto-grid">
+                <!-- Encrypt -->
+                <div class="crypto-card">
+                    <div class="card-header">
+                        <h3>Encrypt Data</h3>
+                        <div class="card-icon">🔒</div>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="data-to-encrypt" placeholder="Enter sensitive data to encrypt..."></textarea>
+                        <button id="encrypt-btn" class="neon-button">
+                            <span></span><span></span><span></span><span></span>
+                            Encrypt
+                        </button>
+                    </div>
+                    <div class="card-result" id="encrypted-result"></div>
+                </div>
+
+                <!-- Decrypt -->
+                <div class="crypto-card">
+                    <div class="card-header">
+                        <h3>Decrypt Data</h3>
+                        <div class="card-icon">🔓</div>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="data-to-decrypt" placeholder="Enter encrypted data to decrypt..."></textarea>
+                        <button id="decrypt-btn" class="neon-button">
+                            <span></span><span></span><span></span><span></span>
+                            Decrypt
+                        </button>
+                    </div>
+                    <div class="card-result" id="decrypted-result"></div>
+                </div>
+            </div>
+
+            <div class="crypto-footer">
+                <button id="logout-btn" class="neon-button small">
+                    <span></span><span></span><span></span><span></span>
+                    Logout
+                </button>
+                <div class="security-status">
+                    <span class="pulse-dot"></span>
+                    <span>Connection Secured with Quantum Encryption</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background shapes -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
