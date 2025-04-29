@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         terminal.scrollTop = terminal.scrollHeight;
     }
 
-    // UTF-8 safe encryption
+    // Simple UTF-8 encryption for text
     function simpleEncrypt(text) {
         const encoder = new TextEncoder();
         const data = encoder.encode(text);
@@ -58,10 +58,44 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // AES-GCM Key for file encryption
+    let cryptoKey;
+
+    async function generateCryptoKey() {
+        cryptoKey = await window.crypto.subtle.generateKey(
+            { name: "AES-GCM", length: 256 },
+            true,
+            ["encrypt", "decrypt"]
+        );
+    }
+
+    async function encryptFile(buffer) {
+        const iv = window.crypto.getRandomValues(new Uint8Array(12));
+        const encrypted = await window.crypto.subtle.encrypt(
+            { name: "AES-GCM", iv },
+            cryptoKey,
+            buffer
+        );
+        const combined = new Uint8Array(iv.byteLength + encrypted.byteLength);
+        combined.set(iv, 0);
+        combined.set(new Uint8Array(encrypted), iv.byteLength);
+        return combined;
+    }
+
+    async function decryptFile(buffer) {
+        const iv = buffer.slice(0, 12);
+        const encrypted = buffer.slice(12);
+        const decrypted = await window.crypto.subtle.decrypt(
+            { name: "AES-GCM", iv },
+            cryptoKey,
+            encrypted
+        );
+        return new Uint8Array(decrypted);
+    }
+
     // Registration
     registerForm.addEventListener('submit', function (e) {
         e.preventDefault();
-
         const username = document.getElementById('register-username').value.trim();
         const password = document.getElementById('register-password').value.trim();
         const confirmPassword = document.getElementById('register-confirm').value.trim();
@@ -108,9 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Login
-    loginForm.addEventListener('submit', function (e) {
+    loginForm.addEventListener('submit', async function (e) {
         e.preventDefault();
-
         const username = document.getElementById('login-username').value.trim();
         const password = document.getElementById('login-password').value.trim();
         const storedData = localStorage.getItem('neocrypt_user_' + username);
@@ -124,6 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const decryptedPassword = simpleDecrypt(userData.password);
 
         if (password === decryptedPassword) {
+            await generateCryptoKey(); // generate encryption key when login
             addTerminalMessage("> Identity verified: " + username);
             addTerminalMessage("> Quantum encryption handshake complete");
             addTerminalMessage("> Welcome to NeoCrypt 2050");
@@ -155,20 +189,18 @@ document.addEventListener('DOMContentLoaded', function () {
     // Forgot credentials
     document.getElementById('forgot-link').addEventListener('click', function (e) {
         e.preventDefault();
-        
         loginForm.classList.remove('active');
         registerForm.classList.remove('active');
         document.getElementById('reset-password-page').classList.remove('hidden');
         document.getElementById('reset-password-page').classList.add('active');
     });
-    
 
     document.getElementById('reset-submit').addEventListener('click', function () {
         const username = document.getElementById('reset-username').value.trim();
         const answer = document.getElementById('reset-security-answer').value.trim();
         const newPassword = document.getElementById('reset-new-password').value.trim();
-
         const storedData = localStorage.getItem('neocrypt_user_' + username);
+
         if (!storedData) {
             alert("User not found.");
             addTerminalMessage("> Error: User not found in database");
@@ -189,13 +221,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         alert("Password has been reset successfully.");
         addTerminalMessage("> Password reset successful for user: " + username);
-        
+
         document.getElementById('reset-password-page').classList.remove('active');
         document.getElementById('reset-password-page').classList.add('hidden');
         document.querySelector('.auth-container').classList.remove('hidden');
         document.querySelector('.crypto-terminal').classList.remove('hidden');
         btnLogin.click();
     });
+
     // Crypto tool handlers
     function setupCryptoTools() {
         document.getElementById('encrypt-btn').addEventListener('click', function () {
@@ -240,12 +273,54 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('.auth-container').classList.remove('hidden');
             document.querySelector('.crypto-terminal').classList.remove('hidden');
             document.getElementById('login-form').reset();
-
             const welcomeMsg = document.querySelector('.welcome-message');
             if (welcomeMsg) welcomeMsg.remove();
-
             addTerminalMessage("> Session terminated");
             addTerminalMessage("> Ready for new authentication");
+        });
+
+        // File Encryption
+        document.getElementById('encrypt-file-btn').addEventListener('click', async () => {
+            const fileInput = document.getElementById('file-to-encrypt');
+            const file = fileInput.files[0];
+            if (!file) return alert("Select a file to encrypt.");
+            const reader = new FileReader();
+            reader.onload = async function () {
+                const buffer = reader.result;
+                const encrypted = await encryptFile(buffer);
+                const blob = new Blob([encrypted]);
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name + ".encrypted";
+                a.click();
+                URL.revokeObjectURL(url);
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        // File Decryption
+        document.getElementById('decrypt-file-btn').addEventListener('click', async () => {
+            const fileInput = document.getElementById('file-to-decrypt');
+            const file = fileInput.files[0];
+            if (!file) return alert("Select a file to decrypt.");
+            const reader = new FileReader();
+            reader.onload = async function () {
+                const buffer = new Uint8Array(reader.result);
+                try {
+                    const decrypted = await decryptFile(buffer);
+                    const blob = new Blob([decrypted]);
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = file.name.replace(".encrypted", ".decrypted");
+                    a.click();
+                    URL.revokeObjectURL(url);
+                } catch (e) {
+                    alert("Decryption failed. Wrong key?");
+                }
+            };
+            reader.readAsArrayBuffer(file);
         });
     }
 
