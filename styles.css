@@ -625,7 +625,7 @@ body {
 .copy-btn:hover {
     background: rgba(0, 243, 255, 0.2);
 }
-/* Mobile Optimization - Add to the bottom of styles.css */
+/* Mobile Optimization */
 @media (max-width: 480px) {
     .container {
         padding: 1rem;
