@@ -625,3 +625,64 @@ body {
 .copy-btn:hover {
     background: rgba(0, 243, 255, 0.2);
 }
+/* Mobile Optimization - Add to the bottom of styles.css */
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .logo {
+        font-size: 2rem;
+    }
+    
+    .tagline {
+        font-size: 0.9rem;
+        letter-spacing: 0.1rem;
+    }
+    
+    .auth-toggle button {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+    
+    .auth-form {
+        padding: 1rem;
+    }
+    
+    .terminal-body {
+        height: 120px;
+        font-size: 0.8rem;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .terminal-body p {
+        margin-bottom: 0.3rem;
+        animation: none;
+    }
+    
+    .neon-button {
+        padding: 0.8rem 1.2rem;
+        font-size: 0.9rem;
+        margin: 1rem auto;
+    }
+    
+    .crypto-terminal {
+        max-width: 100%;
+        padding: 0.8rem;
+    }
+    
+    .input-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .input-group input {
+        padding: 0.8rem 0.5rem 0.3rem;
+    }
+    
+    .input-group input:focus + .input-label,
+    .input-group input:valid + .input-label {
+        transform: translateY(-1.2rem);
+        font-size: 0.7rem;
+    }
+}
