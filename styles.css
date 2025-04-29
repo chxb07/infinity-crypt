@@ -686,3 +686,22 @@ body {
         font-size: 0.7rem;
     }
 }
+/* Terminal mobile fixes */
+@media (max-width: 480px) {
+    .terminal-body {
+        font-family: monospace;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    
+    .terminal-body p {
+        display: inline-block;
+        width: 100%;
+        overflow-x: visible;
+        white-space: normal;
+    }
+    
+    .terminal-header {
+        padding: 0.3rem;
+    }
+}
