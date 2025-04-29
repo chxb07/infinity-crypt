@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>InfinityCrypt 2025</title>
     <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
@@ -129,7 +128,7 @@
         <!-- Crypto Tools Page -->
         <div id="crypto-tools-page" class="hidden">
             <div class="crypto-header">
-                 <span class="neon-pink">Data Vault</span>
+                <h2>InfinityCrypt <span class="neon-pink">Data Vault</span></h2>
                 <p class="neon-text">Your data will be safe.</p>
             </div>
 
@@ -165,6 +164,37 @@
                     </div>
                     <div class="card-result" id="decrypted-result"></div>
                 </div>
+
+                <!-- File Encryption -->
+<div class="crypto-card">
+    <div class="card-header">
+        <h3>Encrypt File</h3>
+        <div class="card-icon">📁</div>
+    </div>
+    <div class="card-body">
+        <input type="file" id="file-to-encrypt" />
+        <button id="encrypt-file-btn" class="neon-button">
+            <span></span><span></span><span></span><span></span>
+            Encrypt & Save
+        </button>
+    </div>
+</div>
+
+<!-- File Decryption -->
+<div class="crypto-card">
+    <div class="card-header">
+        <h3>Decrypt File</h3>
+        <div class="card-icon">📂</div>
+    </div>
+    <div class="card-body">
+        <input type="file" id="file-to-decrypt" />
+        <button id="decrypt-file-btn" class="neon-button">
+            <span></span><span></span><span></span><span></span>
+            Decrypt & Save
+        </button>
+    </div>
+</div>
+
             </div>
 
             <div class="crypto-footer">
