@@ -4,7 +4,7 @@
 
 ## 🌐 Live Demo
 
-*(Add link here if hosted)*
+*(https://chxb07.github.io/infinity-crypt/)*
 
 ## 📁 Features
 
